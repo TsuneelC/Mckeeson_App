@@ -1,0 +1,9 @@
+{
+    "presets": [
+        "env",
+        "react"
+    ],
+    " ": [
+        "transform-class-properties"
+    ]
+}

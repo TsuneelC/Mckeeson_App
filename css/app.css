@@ -1,0 +1,90 @@
+.App {
+    text-align: center;
+  }
+  
+  .App-logo {
+    background-color: #1c6eda;
+    height: 20Px
+  }
+  
+  .mck-div-logo {
+    padding-top: 5Px;
+    height: 50px;
+    padding-bottom: 2Px;
+    
+  }
+  
+  
+  
+  .App-header {
+    background-color: #282c34;
+    min-height: 10vh;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    justify-content: top;
+    font-size: calc(10px + 2vmin);
+    color: white;
+  }
+  
+  .App-link {
+    color: #61dafb;
+  }
+  
+  @keyframes App-logo-spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  
+  .camp-select {
+    display: inline-block;
+    max-width: 200%;
+    height: calc(2.25rem + 10px);
+    padding: .375rem 1.75rem .375rem .75rem;
+    line-height: 1.25;
+    color: #464a4c;
+    vertical-align: middle;
+    
+    
+  
+  }
+  
+  
+  .tag {
+    font-size: 14px;
+    padding: .3em .4em .4em;
+    margin: 0 .3em 0.5em;
+    
+  }
+  .tag a {
+    color: #bbb;
+    cursor: pointer;
+    opacity: 0.6;
+  }
+  .tag a:hover {
+    opacity: 1.0
+  }
+  .tag .remove {
+    vertical-align: bottom;
+    top: 0;
+  }
+  .tag a {
+    margin: 0 0 0 .3em;
+  }
+  .tag a .glyphicon-white {
+    color: #fff;
+    margin-bottom: 2px;
+  }
+  
+  .container-fluid {
+    margin-right: auto;
+    margin-left: initial;
+    max-width: 550px;
+    border: 1px solid ;
+    
+    height: 250px;
+  }

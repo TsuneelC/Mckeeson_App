@@ -1,9 +1,11 @@
 import React, { Component, Fragment } from 'react';
 import ReactDOM from 'react-dom';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
-import { CustomerAttributeselector, ItemAttributeselector } from './commonattributelist';
-import { CustomerFilter, ItemFilter } from './commonSearchFilters';
+import {CustomerFilter, ItemFilter} from './Components/CommonSearchFilters';
+import {CustomerAttributeselector, ItemAttributeselector} from './Components/CommonAttributes';
 import './Components/css/App.css';
+
+
 
 export default class MckessonApp extends React.Component {
 
@@ -13,7 +15,6 @@ export default class MckessonApp extends React.Component {
             selectedcustvalues: [],
             selecteditemvalues: []
         }
-
         this.handleSearch = this.handleSearch.bind(this);
         this.handlecustomerClick = this.handlecustomerClick.bind(this);
         this.handleitemClick = this.handleitemClick.bind(this);
@@ -27,17 +28,13 @@ export default class MckessonApp extends React.Component {
     handlecustomerClick(selected) {
         console.log("attributelabel array size is:" + this.state.selectedcustvalues.length);
 
-        if (this.selected) {
+        if (selected) {
 
             var obj = [this.customerlabel] + ":" + selected;
-
             this.setState((prevState) => ({
-
                 selectedcustvalues: prevState.selectedcustvalues.concat(obj)
             }));
-
         }
-
     }
 
     handleitemClick(selected) {
@@ -46,21 +43,14 @@ export default class MckessonApp extends React.Component {
         if (selected) {
 
             var obj = [this.itemlabel] + ":" + selected;
-
             this.setState((prevState) => ({
-
                 selecteditemvalues: prevState.selecteditemvalues.concat(obj)
             }));
-
         }
-
     }
-
-
 
     handleSearch(event) {
         console.log('event', event);
-
     }
 
     handlecustomerattributelabel(e) {
@@ -93,29 +83,20 @@ export default class MckessonApp extends React.Component {
 
     render() {
         return (
-
-
-
             <Fragment>
 
                 <div className="row">
 
                     <CustomerAttributeselector handlecustomerattributelabel={this.handlecustomerattributelabel} />
-
-
                     <CustomerFilter handlecustomerClick={this.handlecustomerClick} />
-
-
                     <ItemAttributeselector handleitemattributelabel={this.handleitemattributelabel} />
                     <ItemFilter handleitemClick={this.handleitemClick} />
-
                 </div>
                 <br />
                 <br />
                 <div className='col-sm-8'>
                 <div className="row">
                     <ComboOptions selectedcustvalues={this.state.selectedcustvalues} selecteditemvalues={this.state.selecteditemvalues } Deleteoption={this.Deleteoption} />
-                   
                 </div>
                 </div>
 
@@ -165,30 +146,20 @@ const Option = (props) => {
 
     if (props.option_type==="customer"){
     return (
-
-
-
-        <span class="tag label label-info1">
+        <span className="tag label label-info1">
             <span>{props.text}</span>
             <a href="#"><i class="remove glyphicon glyphicon-remove-sign glyphicon-white" > </i></a>
         </span>
-
-
     );
     }
     else{
-
         return (
-
-
-
-            <span class="tag label label-info">
+            <span className="tag label label-info">
                 <span>{props.text}</span>
                 <a href="#"><i class="remove glyphicon glyphicon-remove-sign glyphicon-white" > </i></a>
             </span>
-    
-    
         );
     }
 }
-ReactDOM.render(<MckessonApp />, document.getElementById('app'));
+
+ReactDOM.render(<MckessonApp/>,document.getElementById('app'));

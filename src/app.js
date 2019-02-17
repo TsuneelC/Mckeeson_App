@@ -4,6 +4,7 @@ import 'react-bootstrap-typeahead/css/Typeahead.css';
 import { CustomerFilter, ItemFilter } from './Components/CommonSearchFilters';
 import { CustomerAttributeselector, ItemAttributeselector, OperatorAttributeselector } from './Components/CommonAttributes';
 import './Components/css/App.css';
+import ModalComponents from './Components/ModalComponent'
 
 
 export default class MckessonApp extends React.Component {
@@ -200,49 +201,84 @@ export default class MckessonApp extends React.Component {
                     </div>
                 </div>
 
+                <div className='col-sm-8'>
+                    <div className="row">
+                        <ModalComponents />
+
+                    </div>
+                </div>
+
             </Fragment>
         );
     }
 }
 
-const ComboOptions = (props) => {
-    return (
+class ComboOptions extends React.Component {
+ state ={
+    modalIsOpen:false,
+    optionVal:''
+ }
 
+  constructor(props){
+      super(props)
+      this.handleLabelClick = this.handleLabelClick.bind(this)
+      this.handleCloseButton = this.handleCloseButton.bind(this)
+  }
 
-        <div className="container-fluid">
-            <div className="row">
-                {
-                    props.selectedcustvalues.map((option) => (
+  handleLabelClick(value){
+      console.log('Hi user',value)
+       this.setState({modalIsOpen:true})
+  }
 
+  handleCloseButton(){
+    this.setState({modalIsOpen:false})
+  }
+    render() {
 
+        return (
 
-                        <Option
-                            key={option}
-                            text={option.attribute}
-                            option_type="customer"
-                            Deleteoption={props.Deleteoption}
-                            badge={(option.included_values.length + option.excluded_values.length)}
-                        >{option}
-                        </Option>))
-                }
+            <div className="container-fluid">
+                <div className="row">
+                    {
+                        this.props.selectedcustvalues.map((option) => (
 
-                {
-                    props.selecteditemvalues.map((option) => (
+                            
 
-                        <Option
-                            key={option}
-                            text={option.attribute}
-                            option_type="item"
-                            Deleteoption={props.Deleteoption}
+                            <Option
+                                key={option}
+                                text={option.attribute}
+                                option_type="customer"
+                                Deleteoption={this.props.Deleteoption}
+                                handleLabelClick={this.handleLabelClick}
+                                badge={(option.included_values.length + option.excluded_values.length)}
+                            >{option}
+                            </Option>))
+                    }
 
-                        >{option}
-                        </Option>))
-                }
+                    {
+                        this.props.selecteditemvalues.map((option) => (
+
+                            <Option
+                                key={option}
+                                text={option.attribute}
+                                option_type="item"
+                                Deleteoption={this.props.Deleteoption}
+                                handleLabelClick={this.props.handleLabelClick}
+                            >{option}
+                            </Option>))
+                    }
+
+                </div>
+                <div className="row">
+                    <ModalComponents modalIsOpen={this.state.modalIsOpen} handleCloseButton={this.handleCloseButton} 
+                    selectedcustvalues={this.props.selectedcustvalues}/>
+
+                </div>
 
             </div>
-        </div>
 
-    );
+        );
+    }
 };
 
 
@@ -254,8 +290,8 @@ const Option = (props) => {
 
             <span>
                 <span class="tag label label-info1">
-                    <span>{props.text}</span>
-                    <a href="#"><i class="remove glyphicon glyphicon-remove-sign glyphicon-white" > </i></a>
+                    <span onClick={props.handleLabelClick}>{props.text}</span>
+                    <a href="#" onClick={props.handleLabelClick}><i class="remove glyphicon glyphicon-remove-sign glyphicon-white" > </i></a>
 
                 </span>
                 <span class="badge1 badge-notify">{props.badge}</span>
@@ -266,8 +302,8 @@ const Option = (props) => {
 
         return (
             <span class="tag label label-info">
-                <span>{props.text}</span>
-                <a href="#"><i class="remove glyphicon glyphicon-remove-sign glyphicon-white" > </i></a>
+                <span onClick={props.handleLabelClick}>{props.text}</span>
+                <a href="#" onClick={props.handleLabelClick}><i class="remove glyphicon glyphicon-remove-sign glyphicon-white" > </i></a>
             </span>
         );
     }

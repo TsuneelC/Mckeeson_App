@@ -22,6 +22,7 @@ export default class ModalComponent extends React.Component {
     this.openModal = this.openModal.bind(this);
     this.afterOpenModal = this.afterOpenModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
+    
   }
 
   state = {
@@ -46,7 +47,8 @@ export default class ModalComponent extends React.Component {
   }
 
   render() {
-    console.log('modalIsOpen', this.props.selectedcustvalues)
+    console.log('this.props.selectedcustvalues', this.props.selectedcustvalues)
+    console.log('selectedOption', this.props.selectedOption)
     let selectedcustvalues = [];
     if (this.props.selectedcustvalues) {
       selectedcustvalues = this.props.selectedcustvalues
@@ -62,23 +64,24 @@ export default class ModalComponent extends React.Component {
         >
           <button onClick={this.props.handleCloseButton}>close</button>
           <table className="table">
-            <thead>
-              <tr>
-                <th scope="col">Col1</th>
-                <th scope="col">Col2</th>
-                <th scope="col">Col3</th>
-              </tr>
-            </thead>
+           
             <tbody>
             {
               selectedcustvalues.map( (value, i) => {
-                return (
-                  <tr key={i}>
-                    <td>{value["attribute"]}</td>
-                    <td>{value["included_values"]}</td>
-                    <td>{value["excluded_values"]}</td>
-                  </tr>
-                );
+                if(value["attribute"]==this.props.selectedOption){
+                  return (                
+                    <tr key={i}>
+                      <th>{value["attribute"]}</th>
+                      <td>{value["included_values"]}</td>
+                      <td>{value["excluded_values"]}</td>
+                    </tr>
+                  
+                  );
+
+
+                }
+
+                
               })
             }
             </tbody>

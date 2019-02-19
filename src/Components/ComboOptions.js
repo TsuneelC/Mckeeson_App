@@ -6,17 +6,23 @@ import ModalComponent from './ModalComponent';
 export default class ComboOptions extends React.Component {
     state ={
        modalIsOpen:false,
-       optionVal:''
+       optionVal:'',
+       selectedOption:''
     }
    
      constructor(props){
          super(props)
          this.handleLabelClick = this.handleLabelClick.bind(this)
          this.handleCloseButton = this.handleCloseButton.bind(this)
+         this.handleSelectedOption = this.handleSelectedOption.bind(this)
      }
-   
+
+     handleSelectedOption(value){
+         this.setState({selectedOption:value})
+     }
+     
      handleLabelClick(value){
-         console.log('Hi user',value)
+         window.value = value
           this.setState({modalIsOpen:true})
      }
    
@@ -41,6 +47,7 @@ export default class ComboOptions extends React.Component {
                                    Deleteoption={this.props.Deleteoption}
                                    handleLabelClick={this.handleLabelClick}
                                    badge={(option.included_values.length + option.excluded_values.length)}
+                                   handleSelectedOption= {this.handleSelectedOption}
                                >{option}
                                </Option>))
                        }
@@ -54,6 +61,7 @@ export default class ComboOptions extends React.Component {
                                    option_type="item"
                                    Deleteoption={this.props.Deleteoption}
                                    handleLabelClick={this.props.handleLabelClick}
+                                   handleSelectedOption= {this.handleSelectedOption}
                                >{option}
                                </Option>))
                        }
@@ -61,7 +69,9 @@ export default class ComboOptions extends React.Component {
                    </div>
                    <div className="row">
                        <ModalComponent modalIsOpen={this.state.modalIsOpen} handleCloseButton={this.handleCloseButton} 
-                       selectedcustvalues={this.props.selectedcustvalues}/>
+                       selectedcustvalues={this.props.selectedcustvalues}
+                       selectedOption={this.state.selectedOption}
+                       />
    
                    </div>
    

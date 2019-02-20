@@ -22,7 +22,7 @@ export default class ModalComponent extends React.Component {
     this.openModal = this.openModal.bind(this);
     this.afterOpenModal = this.afterOpenModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
-    
+    this.prepareTable = this.prepareTable.bind(this);
   }
 
   state = {
@@ -32,6 +32,33 @@ export default class ModalComponent extends React.Component {
   openModal() {
     this.setState({ modalIsOpen: true });
   }
+
+
+  prepareTable(includeArr,excludeArr){
+  return(
+       <tr>
+      <td>
+        <ul>
+        includeArr.map((val)=>{
+              <li>{val}</li>
+        })        
+        </ul>      
+      </td>
+      <td>
+        <ul>
+        excludeArr.map((val)=>{
+              <li>{val}</li>
+        }) 
+        </ul>
+      </td>
+   </tr>
+      )
+      
+
+      
+  } 
+
+
 
   componentDidUpdate() {
 
@@ -63,25 +90,49 @@ export default class ModalComponent extends React.Component {
           contentLabel="Example Modal"
         >
           <button onClick={this.props.handleCloseButton}>close</button>
-          <table className="table">
-           
+          <table className="table" border="1">
+          {
+            selectedcustvalues.map( (value, i) => {
+              if(value["attribute"]==this.props.selectedOption){
+                return (                
+                  <caption>{value["attribute"].toUpperCase()}</caption>               
+                );
+              }
+
+              
+            })
+          }
+              <tr>
+                      <th>Included</th>
+                      <th>Excluded</th>
+                    </tr>      
             <tbody>
             {
               selectedcustvalues.map( (value, i) => {
                 if(value["attribute"]==this.props.selectedOption){
-                  return (                
-                    <tr key={i}>
-                      <th>{value["attribute"]}</th>
-                      <td>{value["included_values"]}</td>
-                      <td>{value["excluded_values"]}</td>
-                    </tr>
-                  
+                  var included_values =value["included_values"];
+                  var excluded_values =value["excluded_values"];
+                  return (  
+                    <tr>
+                    <td>
+                      <ul>
+                      {included_values.map((val) => {
+                           return <li>{val}</li>
+                      })}        
+                      </ul>      
+                    </td>
+                    <td>
+                      <ul>
+                      {excluded_values.map((val) => {
+                           return  <li>{val}</li>
+                      }) }
+                      </ul>
+                    </td>
+                 </tr>
+                   
                   );
-
-
                 }
-
-                
+              
               })
             }
             </tbody>

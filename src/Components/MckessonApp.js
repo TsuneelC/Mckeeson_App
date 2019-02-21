@@ -18,9 +18,36 @@ export default class MckessonApp extends React.Component {
         this.handleitemattributelabel = this.handleitemattributelabel.bind(this);
         this.handleoperatorattribute = this.handleoperatorattribute.bind(this);
         this.Deleteoption = this.Deleteoption.bind(this);
+        this.handleDelete = this.handleDelete.bind(this);
         var customerlabel = "";
         var itemlabel = "";
         var operatorlabel = "";
+    }
+
+    handleDelete(val,type,selectedOptions){
+       //console.log('Hi I am here',selectedOptions)
+       var selectedcustvalues = this.state.selectedcustvalues;
+       //window.selectedcustvalues =selectedcustvalues;
+     
+       var selectedcustvalues2 =selectedcustvalues.map(obj=>{
+           if(obj["attribute"]!=selectedOptions){
+              // console.log('obj in ',obj)
+               return obj;
+           }
+             
+          else{
+              var newArr = obj[type];
+              newArr = newArr.filter(item => item!=val);
+              obj[type] = newArr;
+             // console.log('obj in else',obj)
+              return obj;
+          } 
+
+        })
+
+        console.log("Dekho kya kiya hai ",selectedcustvalues2);
+        
+
     }
 
     handlecustomerClick(selected) {
@@ -192,7 +219,11 @@ export default class MckessonApp extends React.Component {
                 <br />
                 <div className='col-sm-8'>
                     <div className="row">
-                        <ComboOptions selectedcustvalues={this.state.selectedcustvalues} selecteditemvalues={this.state.selecteditemvalues} Deleteoption={this.Deleteoption} />
+                        <ComboOptions selectedcustvalues={this.state.selectedcustvalues} 
+                        selecteditemvalues={this.state.selecteditemvalues} 
+                        Deleteoption={this.Deleteoption} 
+                        handleDelete ={this.handleDelete}
+                        />
 
                     </div>
                 </div>

@@ -22,42 +22,20 @@ export default class ModalComponent extends React.Component {
     this.openModal = this.openModal.bind(this);
     this.afterOpenModal = this.afterOpenModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
-    this.prepareTable = this.prepareTable.bind(this);
+    this.handleRemove= this.handleRemove.bind(this);
   }
 
   state = {
 
   };
 
+  handleRemove(val,type){
+    this.props.handleDelete(val,type,this.props.selectedOption);
+  }
+
   openModal() {
     this.setState({ modalIsOpen: true });
   }
-
-
-  prepareTable(includeArr,excludeArr){
-  return(
-       <tr>
-      <td>
-        <ul>
-        includeArr.map((val)=>{
-              <li>{val}</li>
-        })        
-        </ul>      
-      </td>
-      <td>
-        <ul>
-        excludeArr.map((val)=>{
-              <li>{val}</li>
-        }) 
-        </ul>
-      </td>
-   </tr>
-      )
-      
-
-      
-  } 
-
 
 
   componentDidUpdate() {
@@ -91,50 +69,56 @@ export default class ModalComponent extends React.Component {
         >
           <button onClick={this.props.handleCloseButton}>close</button>
           <table className="table" border="1">
-          {
-            selectedcustvalues.map( (value, i) => {
-              if(value["attribute"]==this.props.selectedOption){
-                return (                
-                  <caption>{value["attribute"].toUpperCase()}</caption>               
-                );
-              }
-
-              
-            })
-          }
-              <tr>
-                      <th>Included</th>
-                      <th>Excluded</th>
-                    </tr>      
-            <tbody>
             {
-              selectedcustvalues.map( (value, i) => {
-                if(value["attribute"]==this.props.selectedOption){
-                  var included_values =value["included_values"];
-                  var excluded_values =value["excluded_values"];
-                  return (  
-                    <tr>
-                    <td>
-                      <ul>
-                      {included_values.map((val) => {
-                           return <li>{val}</li>
-                      })}        
-                      </ul>      
-                    </td>
-                    <td>
-                      <ul>
-                      {excluded_values.map((val) => {
-                           return  <li>{val}</li>
-                      }) }
-                      </ul>
-                    </td>
-                 </tr>
-                   
+              selectedcustvalues.map((value, i) => {
+                if (value["attribute"] == this.props.selectedOption) {
+                  return (
+                    <caption>{value["attribute"].toUpperCase()}</caption>
                   );
                 }
-              
+
+
               })
             }
+            <tr>
+              <th>Included</th>
+              <th>Excluded</th>
+            </tr>
+            <tbody>
+              {
+                selectedcustvalues.map((value, i) => {
+                  if (value["attribute"] == this.props.selectedOption) {
+                    var included_values = value["included_values"];
+                    var excluded_values = value["excluded_values"];
+                    return (
+                      <tr>
+                        <td>
+                          <ul>
+                            {included_values.map((val) => {
+                              return <li>{val}
+                                <a href="#" onClick={() => this.handleRemove(val,'included')}>
+                                  <span className="glyphicon glyphicon-remove-sign"></span>
+                                </a></li>
+                            })}
+                          </ul>
+                        </td>
+                        <td>
+                          <ul>
+                            {excluded_values.map((val) => {
+                              return <li>{val}
+                                <a href="#"  onClick={() => this.handleRemove(val,'excluded')}>
+                                  <span className="glyphicon glyphicon-remove-sign"></span>
+                                </a></li>
+                            })}
+                          </ul>
+                        </td>
+                      </tr>
+
+                    );
+                  }
+
+                })
+              }
             </tbody>
           </table>
 

@@ -71,6 +71,7 @@ export default class ComboOptions extends React.Component {
                        <ModalComponent modalIsOpen={this.state.modalIsOpen} handleCloseButton={this.handleCloseButton} 
                        selectedcustvalues={this.props.selectedcustvalues}
                        selectedOption={this.state.selectedOption}
+                       handleDelete={this.props.handleDelete}
                        />
    
                    </div>

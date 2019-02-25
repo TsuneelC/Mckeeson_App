@@ -22,15 +22,15 @@ export default class ModalComponent extends React.Component {
     this.openModal = this.openModal.bind(this);
     this.afterOpenModal = this.afterOpenModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
-    this.handleRemove= this.handleRemove.bind(this);
+    this.handleRemove = this.handleRemove.bind(this);
   }
 
   state = {
 
   };
 
-  handleRemove(val,type){
-    this.props.handleDelete(val,type,this.props.selectedOption);
+  handleRemove(val, type) {
+    this.props.handleDelete(val, type, this.props.selectedOption);
   }
 
   openModal() {
@@ -73,30 +73,43 @@ export default class ModalComponent extends React.Component {
               selectedcustvalues.map((value, i) => {
                 if (value["attribute"] == this.props.selectedOption) {
                   return (
-                    <caption>{value["attribute"].toUpperCase()}</caption>
+                    <caption key={i}>{value["attribute"].toUpperCase()}</caption>
                   );
                 }
 
 
               })
             }
-            <tr>
-              <th>Included</th>
-              <th>Excluded</th>
-            </tr>
             <tbody>
+              <tr>
+                <th key="include">Included</th>
+                <th key="exclude">Excluded</th>
+              </tr>
+
               {
                 selectedcustvalues.map((value, i) => {
                   if (value["attribute"] == this.props.selectedOption) {
                     var included_values = value["included_values"];
                     var excluded_values = value["excluded_values"];
+                    var includeKey = `${i}included`;
+                    var excludeKey = `${i}excluded`;
+                   if(included_values.length==0 && excluded_values==0 )
+                   {
+                     return (
+                       <tr key={i}>
+                         <td  align="center" colSpan="2">No Data</td>
+                         </tr>
+
+                     )
+                   }  
+
                     return (
-                      <tr>
+                      <tr key={i} >
                         <td>
                           <ul>
                             {included_values.map((val) => {
-                              return <li>{val}
-                                <a href="#" onClick={() => this.handleRemove(val,'included')}>
+                              return <li key={val}>{val}
+                                <a href="#" onClick={() => this.handleRemove(val, 'included_values')}>
                                   <span className="glyphicon glyphicon-remove-sign"></span>
                                 </a></li>
                             })}
@@ -105,8 +118,8 @@ export default class ModalComponent extends React.Component {
                         <td>
                           <ul>
                             {excluded_values.map((val) => {
-                              return <li>{val}
-                                <a href="#"  onClick={() => this.handleRemove(val,'excluded')}>
+                              return <li key={val} >{val}
+                                <a href="#" onClick={() => this.handleRemove(val, 'excluded_values')}>
                                   <span className="glyphicon glyphicon-remove-sign"></span>
                                 </a></li>
                             })}

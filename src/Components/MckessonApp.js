@@ -27,16 +27,18 @@ export default class MckessonApp extends React.Component {
     handleDelete(val,type,selectedOptions){
        //console.log('Hi I am here',selectedOptions)
        var selectedcustvalues = this.state.selectedcustvalues;
-       //window.selectedcustvalues =selectedcustvalues;
+       window.selectedcustvalues =selectedcustvalues;
      
-       var selectedcustvalues2 =selectedcustvalues.map(obj=>{
+        selectedcustvalues =selectedcustvalues.map(obj=>{
            if(obj["attribute"]!=selectedOptions){
-              // console.log('obj in ',obj)
+               //console.log('obj in ',obj)
                return obj;
            }
              
           else{
+              //console.log('type',type)
               var newArr = obj[type];
+             // console.log('newArr',newArr)
               newArr = newArr.filter(item => item!=val);
               obj[type] = newArr;
              // console.log('obj in else',obj)
@@ -45,7 +47,8 @@ export default class MckessonApp extends React.Component {
 
         })
 
-        console.log("Dekho kya kiya hai ",selectedcustvalues2);
+        //console.log("Dekho kya kiya hai ",selectedcustvalues2);
+        this.setState({selectedcustvalues})
         
 
     }
